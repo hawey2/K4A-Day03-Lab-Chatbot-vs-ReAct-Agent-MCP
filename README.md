@@ -15,8 +15,8 @@ Thực hiện 3 bước lệnh Terminal thiết thực ngay khi clone repo về 
 
 ### Bước 1: Clone Repo & Tạo môi trường ảo
 ```bash
-git clone https://github.com/<tai_khoan_cua_ban>/K4-DAY03-HoVaTen-MSSV.git
-cd K4-DAY03-HoVaTen-MSSV
+git clone https://github.com/hawey2/K4-DAY03-HoVaTen-MSSV.git
+cd K4-DAY03-NguyenNgocHan-02511
 
 python -m venv .venv
 # Trên Windows PowerShell:

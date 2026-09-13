@@ -2,7 +2,7 @@
 🔌 MULTI-PROVIDER LLM ADAPTER (Google Gemini, OpenAI & Offline Mock)
 Hỗ trợ Native Tool Calling và chuyển đổi linh hoạt qua biến môi trường LLM_PROVIDER.
 """
-
+import traceback
 import os
 import sys
 import json
@@ -64,7 +64,7 @@ class GeminiProvider(BaseLLMProvider):
     """Google Gemini Provider (Native Tool Calling với Google GenAI SDK)"""
     def __init__(self, api_key: str = None, model: str = None):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
-        self.model_name = model or os.getenv("LLM_MODEL") or "gemini-2.5-flash"
+        self.model_name = model or os.getenv("LLM_MODEL") or "gemini-3.6-flash"
 
     def generate(self, prompt: str, system_prompt: str = "") -> str:
         if not self.api_key or self.api_key == "your_gemini_api_key_here":
@@ -106,7 +106,8 @@ class GeminiProvider(BaseLLMProvider):
                 tools=[{"function_declarations": function_declarations}] if function_declarations else None,
                 temperature=0.2
             )
-
+            
+            print("MODEL =", self.model_name)
             response = client.models.generate_content(
                 model=self.model_name,
                 contents=prompt,
@@ -131,8 +132,8 @@ class GeminiProvider(BaseLLMProvider):
                 }
 
         except Exception as e:
-            print(f"⚠️ [Gemini API Warning]: Không thể kết nối live API ({str(e)}). Tự động fallback về Mock.")
-            return MockOfflineProvider().generate_with_tools(prompt, tools_schema, system_prompt)
+            traceback.print_exc()
+            raise
 
 
 class OpenAIProvider(BaseLLMProvider):

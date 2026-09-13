@@ -11,7 +11,6 @@ from typing import Dict, Any
 # ==============================================================================
 
 TOOLS_SCHEMA = [
-    # Tool 1: Đã được định nghĩa mẫu sẵn cho Học viên tham khảo
     {
         "name": "academic_query",
         "description": "Tra cứu hồ sơ và thông tin học vụ của sinh viên VinUni bằng mã sinh viên.",
@@ -26,30 +25,34 @@ TOOLS_SCHEMA = [
             "required": ["student_id"]
         }
     },
-    
-    # --------------------------------------------------------------------------
-    # TODO 1.2: HỌC VIÊN HOÀN THIỆN TOOL SCHEMA CHO 'schedule_appointment'
-    # 🎯 YÊU CẦU THIẾT KẾ SCHEMA (JSON SCHEMA STANDARD):
-    # 1. Tool dùng để đặt lịch hẹn tư vấn học vụ với Cố vấn học tập VinUni.
-    # 2. Thiết kế các tham số (properties) để LLM trích xuất:
-    #    - student_id (string): Mã sinh viên cần đặt lịch (ví dụ: 'SV2026001')
-    #    - datetime_str (string): Thời gian hẹn (ví dụ: '14:00 15/09/2026')
-    #    - advisor_name (string): Tên cố vấn học tập
-    # 3. Khai báo danh sách các trường bắt buộc (required).
-    # --------------------------------------------------------------------------
+
     {
         "name": "schedule_appointment",
         "description": "Đặt lịch hẹn tư vấn học vụ với Cố vấn học tập VinUni.",
         "parameters": {
             "type": "object",
             "properties": {
-                # TODO 1.2: Khai báo các thuộc tính tham số cho Tool tại đây...
+                "student_id": {
+                    "type": "string",
+                    "description": "Mã sinh viên cần đặt lịch (ví dụ: 'SV2026001')"
+                },
+                "datetime_str": {
+                    "type": "string",
+                    "description": "Thời gian hẹn (ví dụ: '14:00 15/09/2026')"
+                },
+                "advisor_name": {
+                    "type": "string",
+                    "description": "Tên cố vấn học tập"
+                }
             },
-            "required": [] # TODO 1.2: Khai báo danh sách các trường bắt buộc tại đây...
+            "required": [
+                "student_id",
+                "datetime_str",
+                "advisor_name"
+            ]
         }
     }
 ]
-
 # ==============================================================================
 # 2. MÔ PHỎNG DỮ LIỆU & HÀM THỰC THI TOOL (EXECUTION LAYER)
 # ==============================================================================
